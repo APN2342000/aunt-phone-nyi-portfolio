@@ -72,18 +72,43 @@ git remote add origin https://github.com/<you>/aunt-phone-nyi-portfolio.git
 git push -u origin main
 ```
 
-### 2. Deploy the API to Render (free)
+### 2. Deploy the API to Render (free, no card required)
 
-1. Go to [dashboard.render.com](https://dashboard.render.com) → **New** → **Blueprint**, and point it at your GitHub repo. Render will detect `render.yaml` at the repo root and configure the service automatically (Docker, free plan, root directory `Portfolio.Api`).
-   - No `render.yaml`? Create the service manually instead: **New → Web Service**, connect the repo, set **Root Directory** to `Portfolio.Api`, **Runtime** to `Docker`, and **Instance Type** to `Free`.
-2. Deploy. You'll get a URL like `https://portfolio-api-xxxx.onrender.com`.
-3. Confirm it works: visit `https://portfolio-api-xxxx.onrender.com/swagger`.
+Render's **Blueprint** flow (the one-click `render.yaml` path) sometimes
+asks for card verification even for free services — that's a Render
+account-verification quirk, not a cost. The plain manual flow below
+reliably stays card-free:
+
+1. Go to [dashboard.render.com](https://dashboard.render.com) and sign up with GitHub (no card needed for this).
+2. Click **New** → **Web Service** (not "Blueprint").
+3. Connect your GitHub repo (`aunt-phone-nyi-portfolio`).
+4. Fill in:
+   | Field | Value |
+   |---|---|
+   | Name | `portfolio-api` (or anything) |
+   | Root Directory | `Portfolio.Api` |
+   | Runtime | `Docker` |
+   | Instance Type | **Free** |
+5. Click **Create Web Service**. Wait for the build (a few minutes).
+6. You'll get a URL like `https://portfolio-api-xxxx.onrender.com`.
+7. Confirm it works: visit `https://portfolio-api-xxxx.onrender.com/swagger`.
+
+If Render ever does prompt for a card on this manual path too, it's
+asking to *verify* you're human/not-abusive — it does not charge you on
+the Free instance type. You can also just try a different sign-up method
+(GitHub vs. Google vs. email) or platform (see "Free alternatives" below)
+if you'd rather not enter one at all.
 
 **Free tier caveats (as of 2026):** the service spins down after 15 minutes
 of no traffic and takes ~30–60 seconds to wake back up on the next request
 — totally fine for a portfolio, just know the first visitor of the day
 might wait a bit. You get 750 free instance-hours/month, which covers one
 always-referenced service comfortably.
+
+> **Prefer Infrastructure-as-Code?** `render.yaml` is still in the repo and
+> works the same way if Render doesn't prompt you for a card on your
+> account — try **New → Blueprint** first and fall back to the manual
+> steps above if it does.
 
 ### 3. Deploy the frontend to Cloudflare Pages (free)
 
@@ -124,6 +149,20 @@ Once both are wired up, **every `git push` to `main` auto-deploys both
 sides** — that's your "production auto run": no servers to babysit, no
 manual restarts. If you want a staging area, create a second branch and a
 second Render/Pages environment pointed at it.
+
+### If Render still asks for a card on your account
+
+This happens on some accounts even for the manual flow — it's tied to
+Render's fraud-prevention checks, not the free plan itself. Two options:
+
+1. **Try a different sign-up method** — email/password instead of
+   GitHub OAuth, or vice versa. This resets which verification path Render
+   puts you on.
+2. **Use a different free host for the API** — [Koyeb](https://www.koyeb.com)
+   and [Fly.io](https://fly.io) both support Docker deploys; check their
+   current card requirements before signing up, as this changes often. As
+   of 2026, Render remains the most consistently card-free option for a
+   Dockerized .NET API among mainstream hosts.
 
 ### If you outgrow the free tier
 
