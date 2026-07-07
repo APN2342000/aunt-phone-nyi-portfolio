@@ -1,0 +1,202 @@
+// ============================================================
+// Global design tokens — "PCB" system
+// The visual concept: Aunt Phone Nyi trained as an electronics
+// engineer before becoming a web developer, so the page is built
+// like a circuit board — sections are components with silkscreen
+// part numbers (U1, U2...), connected by a copper trace that runs
+// down the page.
+// ============================================================
+
+:root {
+  // Surfaces
+  --bg-board: #0f1613;
+  --bg-panel: #141e1a;
+  --bg-panel-raised: #1a2621;
+  --bg-panel-border: #24352d;
+
+  // Accents
+  --copper: #c9814a;
+  --copper-dim: #7a5233;
+  --copper-glow: rgba(201, 129, 74, 0.35);
+  --signal-teal: #52d7ac;
+  --signal-teal-dim: rgba(82, 215, 172, 0.25);
+
+  // Text
+  --text-primary: #eaf2ec;
+  --text-secondary: #a9bdb3;
+  --text-muted: #6c8177;
+
+  // Type
+  --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  // Layout
+  --content-max: 780px;
+  --rail-width: 56px;
+  --section-gap: clamp(64px, 10vw, 120px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-board);
+  background-image:
+    linear-gradient(var(--bg-panel-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bg-panel-border) 1px, transparent 1px);
+  background-size: 42px 42px;
+  background-position: center top;
+  background-attachment: fixed;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  margin: 0;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--copper);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+button {
+  font-family: inherit;
+}
+
+// Visible keyboard focus everywhere
+:focus-visible {
+  outline: 2px solid var(--signal-teal);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+// Shared "silkscreen" eyebrow label used at the top of every section
+.pcb-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--copper);
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--copper);
+    border-radius: 1px;
+    transform: rotate(45deg);
+  }
+}
+
+.section-shell {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// ============================================================
+// Motion system — HUD-style reveals and energy glow
+// ============================================================
+
+// Scroll-triggered reveal, applied via the [appReveal] directive.
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+// Hero content powers on when the page loads.
+@keyframes power-on {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.power-on {
+  animation: power-on 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--power-on-delay, 0ms);
+}
+
+// Expanding "ping" ring used behind status indicators (e.g. the open-to-work LED).
+@keyframes reactor-ping {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+// A soft glow that travels along a line — used on the trace rail and section rules.
+@keyframes trace-pulse {
+  0% {
+    top: -8%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+

@@ -1,0 +1,23 @@
+<section id="about" class="about">
+  <div class="section-shell">
+    <p class="pcb-label" appReveal>U1 — Strengths &amp; Languages</p>
+    <h2 class="about__heading" [appReveal]="80">What I bring to a team</h2>
+
+    <div class="about__grid">
+      <ul class="about__strengths">
+        <li *ngFor="let s of strengths; let i = index" [appReveal]="140 + i * 60">
+          <span class="about__marker" aria-hidden="true"></span>
+          {{ s.label }}
+        </li>
+      </ul>
+
+      <div class="about__languages" [appReveal]="200">
+        <p class="about__sublabel">Languages</p>
+        <div class="about__lang-row" *ngFor="let lang of languages">
+          <span class="about__lang-name">{{ lang.name }}</span>
+          <span class="about__lang-level">{{ lang.level }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

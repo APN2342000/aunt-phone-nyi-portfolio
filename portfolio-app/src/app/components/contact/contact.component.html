@@ -1,0 +1,65 @@
+<section id="contact" class="contact">
+  <div class="section-shell">
+    <p class="pcb-label" appReveal>J2 — Contact</p>
+    <h2 class="contact__heading" [appReveal]="80">Let's connect a wire</h2>
+
+    <div class="contact__grid">
+      <div class="contact__info" [appReveal]="140">
+        <a class="contact__row" href="mailto:{{ profile.email }}">
+          <span class="contact__key">Email</span>
+          <span class="contact__value">{{ profile.email }}</span>
+        </a>
+        <a class="contact__row" href="tel:{{ profile.phone }}">
+          <span class="contact__key">Phone</span>
+          <span class="contact__value">{{ profile.phone }}</span>
+        </a>
+        <div class="contact__row">
+          <span class="contact__key">Location</span>
+          <span class="contact__value">{{ profile.location }}</span>
+        </div>
+        <a class="contact__row" [href]="profile.linkedIn" target="_blank" rel="noopener">
+          <span class="contact__key">LinkedIn</span>
+          <span class="contact__value">View profile</span>
+        </a>
+      </div>
+
+      <form class="contact__form" [appReveal]="220" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <label class="contact__field">
+          <span>Name</span>
+          <input type="text" formControlName="name" placeholder="Your name" />
+          <small class="contact__error" *ngIf="form.controls.name.invalid && form.controls.name.touched">
+            Enter your name.
+          </small>
+        </label>
+
+        <label class="contact__field">
+          <span>Email</span>
+          <input type="email" formControlName="email" placeholder="you@example.com" />
+          <small class="contact__error" *ngIf="form.controls.email.invalid && form.controls.email.touched">
+            Enter a valid email.
+          </small>
+        </label>
+
+        <label class="contact__field">
+          <span>Message</span>
+          <textarea rows="4" formControlName="message" placeholder="What are you building?"></textarea>
+          <small class="contact__error" *ngIf="form.controls.message.invalid && form.controls.message.touched">
+            Say a little more — at least 10 characters.
+          </small>
+        </label>
+
+        <button type="submit" class="contact__submit" [disabled]="state === 'sending'">
+          {{ state === 'sending' ? 'Sending…' : 'Send message' }}
+        </button>
+
+        <p class="contact__status contact__status--ok" *ngIf="state === 'sent'">
+          Message sent. Thanks for reaching out!
+        </p>
+        <p class="contact__status contact__status--error" *ngIf="state === 'error'">
+          Couldn't reach the API. Make sure the .NET backend is running (`dotnet run`), or email
+          {{ profile.email }} directly.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>

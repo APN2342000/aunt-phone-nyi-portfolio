@@ -1,0 +1,15 @@
+<ng-container *ngIf="data$ | async as data">
+  <app-trace-rail></app-trace-rail>
+
+  <main>
+    <app-hero [profile]="data.profile"></app-hero>
+    <app-about [strengths]="data.strengths" [languages]="data.languages"></app-about>
+    <app-experience [items]="data.experience"></app-experience>
+    <app-skills [groups]="data.skills"></app-skills>
+    <app-projects [items]="data.projects"></app-projects>
+    <app-education [items]="data.education"></app-education>
+    <app-contact [profile]="data.profile"></app-contact>
+  </main>
+
+  <app-footer [profile]="data.profile"></app-footer>
+</ng-container>

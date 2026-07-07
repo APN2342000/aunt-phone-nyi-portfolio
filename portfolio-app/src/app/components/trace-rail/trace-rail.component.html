@@ -1,0 +1,22 @@
+<nav class="rail" aria-label="Section navigation">
+  <div class="rail__line" aria-hidden="true">
+    <span class="rail__pulse" aria-hidden="true"></span>
+  </div>
+  <ul class="rail__nodes">
+    <li *ngFor="let node of nodes" class="rail__node" [class.rail__node--active]="node.id === activeId">
+      <button
+        type="button"
+        class="rail__pad"
+        [attr.aria-current]="node.id === activeId ? 'true' : null"
+        [attr.aria-label]="node.label"
+        (click)="scrollTo(node.id)"
+      >
+        <span class="rail__pad-dot" aria-hidden="true"></span>
+      </button>
+      <span class="rail__tooltip">
+        <span class="rail__part">{{ node.partNumber }}</span>
+        {{ node.label }}
+      </span>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,105 @@
+.experience {
+  padding: var(--section-gap) 0;
+}
+
+.experience__heading {
+  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  margin: 10px 0 36px;
+}
+
+.experience__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.experience__item {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 20px;
+}
+
+.experience__rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.experience__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg-panel);
+  border: 2px solid var(--copper-dim);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.experience__dot--active {
+  border-color: var(--signal-teal);
+  box-shadow: 0 0 8px var(--signal-teal-dim);
+}
+
+.experience__connector {
+  flex: 1;
+  width: 2px;
+  background: var(--bg-panel-border);
+  margin: 4px 0;
+}
+
+.experience__item:last-child .experience__connector {
+  display: none;
+}
+
+.experience__card {
+  padding-bottom: 40px;
+}
+
+.experience__card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.experience__role {
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+
+.experience__company {
+  color: var(--copper);
+  font-size: 0.9rem;
+}
+
+.experience__period {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.experience__duration {
+  color: var(--text-muted);
+}
+
+.experience__location {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 6px 0 14px;
+}
+
+.experience__highlights {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  li::marker {
+    color: var(--copper-dim);
+  }
+}

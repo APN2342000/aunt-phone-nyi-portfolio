@@ -1,0 +1,17 @@
+<section id="projects" class="projects">
+  <div class="section-shell">
+    <p class="pcb-label" appReveal>U4 — Projects</p>
+    <h2 class="projects__heading" [appReveal]="80">Where hardware met code first</h2>
+
+    <article class="projects__card" *ngFor="let project of items" [appReveal]="160">
+      <div class="projects__card-head">
+        <h3 class="projects__name">{{ project.name }}</h3>
+        <span class="projects__subtitle">{{ project.subtitle }}</span>
+      </div>
+      <p class="projects__description">{{ project.description }}</p>
+      <div class="projects__stack">
+        <span class="projects__stack-item" *ngFor="let tech of project.stack">{{ tech }}</span>
+      </div>
+    </article>
+  </div>
+</section>

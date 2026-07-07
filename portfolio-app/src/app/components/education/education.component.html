@@ -1,0 +1,14 @@
+<section id="education" class="education">
+  <div class="section-shell">
+    <p class="pcb-label" appReveal>U5 — Education</p>
+    <h2 class="education__heading" [appReveal]="80">Foundations</h2>
+
+    <div class="education__row" *ngFor="let ed of items; let i = index" [appReveal]="120 + i * 100">
+      <div class="education__credential">
+        <h3>{{ ed.credential }}</h3>
+        <p>{{ ed.institution }}</p>
+      </div>
+      <span class="education__period" *ngIf="ed.period">{{ ed.period }}</span>
+    </div>
+  </div>
+</section>

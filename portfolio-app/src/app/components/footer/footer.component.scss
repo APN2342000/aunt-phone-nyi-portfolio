@@ -1,0 +1,21 @@
+.footer {
+  border-top: 1px solid var(--bg-panel-border);
+  padding: 28px 0 60px;
+}
+
+.footer__shell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.footer__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--copper-dim);
+  border: 1px solid var(--bg-panel-border);
+  padding: 2px 8px;
+  border-radius: 3px;
+}

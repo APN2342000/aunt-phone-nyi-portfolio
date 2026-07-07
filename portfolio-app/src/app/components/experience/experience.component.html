@@ -1,0 +1,31 @@
+<section id="experience" class="experience">
+  <div class="section-shell">
+    <p class="pcb-label" appReveal>U2 — Work Experience</p>
+    <h2 class="experience__heading" [appReveal]="80">Where I've been building</h2>
+
+    <ol class="experience__list">
+      <li class="experience__item" *ngFor="let job of items; let i = index" [appReveal]="i * 160">
+        <div class="experience__rail">
+          <span class="experience__dot" [class.experience__dot--active]="job.isCurrent" aria-hidden="true"></span>
+          <span class="experience__connector" aria-hidden="true"></span>
+        </div>
+
+        <div class="experience__card">
+          <div class="experience__card-head">
+            <div>
+              <h3 class="experience__role">{{ job.role }}</h3>
+              <p class="experience__company">{{ job.company }} · {{ job.employmentType }}</p>
+            </div>
+            <span class="experience__period">{{ job.period }} <span class="experience__duration">({{ job.duration }})</span></span>
+          </div>
+
+          <p class="experience__location">{{ job.location }}</p>
+
+          <ul class="experience__highlights">
+            <li *ngFor="let h of job.highlights">{{ h }}</li>
+          </ul>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>

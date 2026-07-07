@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: portfolio-api
+    runtime: docker
+    plan: free
+    rootDir: Portfolio.Api
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      # After you deploy the frontend (Cloudflare Pages/Netlify/Vercel), set
+      # this to that URL so the API accepts requests from it. Comma-separate
+      # multiple origins if needed.
+      - key: AllowedOrigins
+        value: https://your-frontend.pages.dev

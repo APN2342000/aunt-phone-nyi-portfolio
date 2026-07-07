@@ -1,0 +1,26 @@
+<section id="hero" class="hero">
+  <div class="section-shell hero__shell">
+    <div class="hero__status power-on" style="--power-on-delay: 0ms" *ngIf="profile.openToWork">
+      <span class="hero__led" aria-hidden="true"></span>
+      Open to new roles
+    </div>
+
+    <p class="pcb-label power-on" style="--power-on-delay: 80ms">J1 — Board Intro</p>
+
+    <h1 class="hero__name power-on" style="--power-on-delay: 160ms">{{ profile.name }}</h1>
+
+    <p class="hero__title power-on" style="--power-on-delay: 260ms">
+      {{ profile.title }}
+      <span class="hero__tagline">// {{ profile.tagline }}</span>
+    </p>
+
+    <p class="hero__about power-on" style="--power-on-delay: 360ms">{{ profile.about }}</p>
+
+    <div class="hero__actions power-on" style="--power-on-delay: 460ms">
+      <a class="hero__cta hero__cta--primary" href="mailto:{{ profile.email }}">Send an email</a>
+      <a class="hero__cta hero__cta--ghost" [href]="profile.linkedIn" target="_blank" rel="noopener">
+        View LinkedIn
+      </a>
+    </div>
+  </div>
+</section>
