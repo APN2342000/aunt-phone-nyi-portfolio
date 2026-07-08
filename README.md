@@ -66,6 +66,10 @@ site; you get zero infrastructure to babysit.
 
 ### Deploy the frontend to Cloudflare Pages (free, no card, ever)
 
+You can do this two ways — pick whichever fits how you like to work.
+
+**Option A: Connect Git (auto-deploys on every push)**
+
 1. Push this project to GitHub:
    ```bash
    cd aunt-phone-nyi-portfolio
@@ -86,6 +90,31 @@ site; you get zero infrastructure to babysit.
 
 That's the whole thing. Every `git push` to `main` auto-redeploys it —
 that's your "production auto run," with nothing else to maintain.
+
+**Option B: Deploy straight from your terminal (one command, no GitHub needed)**
+
+`package.json` already has a `deploy` script wired up using Cloudflare's
+`wrangler` CLI:
+
+```bash
+cd portfolio-app
+npm install          # pulls in wrangler as a dev dependency
+npx wrangler login    # opens your browser once, to link your free Cloudflare account
+npm run deploy        # builds the app and pushes it straight to Cloudflare Pages
+```
+
+`npx wrangler login` is a one-time step (it just authorizes the CLI — no
+card, same free account as Option A). After that, `npm run deploy`
+rebuilds and republishes in one shot, any time you want to push an update
+— no GitHub required, no dashboard clicking.
+
+The first time you run it, `wrangler` will ask you to confirm creating a
+new Pages project named `aunt-phone-nyi-portfolio` (matching the
+`--project-name` in the `deploy` script) — say yes, and it'll print your
+live URL when it finishes, e.g. `https://aunt-phone-nyi-portfolio.pages.dev`.
+
+> Prefer a different project name? Edit the `deploy` script in
+> `package.json` — the `--project-name=` value becomes part of your URL.
 
 **Editing your resume content after this point:** since there's no live
 backend, edit `portfolio-app/src/app/core/services/portfolio.fallback-data.ts`
