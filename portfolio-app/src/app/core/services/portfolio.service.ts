@@ -13,11 +13,20 @@ export class PortfolioService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Loads the full portfolio payload from the .NET API.
-   * If the API isn't running (e.g. you're only working on the frontend),
-   * this falls back to local seed data so the page still renders.
+   * Loads the full portfolio payload.
+   *
+   * When environment.apiEnabled is false (the production default), this
+   * skips the network call entirely and returns the bundled fallback data
+   * immediately — no live backend required for the site to work.
+   *
+   * When apiEnabled is true, it fetches from the .NET API and falls back
+   * to local seed data if that request fails for any reason.
    */
   getPortfolioData(): Observable<PortfolioData> {
+    if (!environment.apiEnabled) {
+      return of(FALLBACK_PORTFOLIO_DATA);
+    }
+
     if (!this.data$) {
       this.data$ = this.http.get<PortfolioData>(`${this.apiUrl}/portfolio`).pipe(
         catchError(() => {
@@ -35,6 +44,10 @@ export class PortfolioService {
   }
 
   sendContactMessage(message: ContactMessage): Observable<{ success: boolean }> {
+    if (!environment.apiEnabled) {
+      return of({ success: false });
+    }
+
     return this.http.post<{ success: boolean }>(`${this.apiUrl}/contact`, message).pipe(
       catchError(() => {
         console.warn('[PortfolioService] Contact API unreachable.');

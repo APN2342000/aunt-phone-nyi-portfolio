@@ -49,11 +49,14 @@
         </label>
 
         <button type="submit" class="contact__submit" [disabled]="state === 'sending'">
-          {{ state === 'sending' ? 'Sending…' : 'Send message' }}
+          {{ state === 'sending' ? 'Sending…' : (apiEnabled ? 'Send message' : 'Open email to send') }}
         </button>
 
         <p class="contact__status contact__status--ok" *ngIf="state === 'sent'">
           Message sent. Thanks for reaching out!
+        </p>
+        <p class="contact__status contact__status--ok" *ngIf="state === 'mailto'">
+          Opening your email client with this message prefilled — just hit send there.
         </p>
         <p class="contact__status contact__status--error" *ngIf="state === 'error'">
           Couldn't reach the API. Make sure the .NET backend is running (`dotnet run`), or email

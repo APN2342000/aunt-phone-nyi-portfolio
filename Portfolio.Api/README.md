@@ -72,9 +72,11 @@ docker run -p 8080:8080 -e PORT=8080 portfolio-api
 this is what lets the same image run unmodified on Render, Fly.io, or any
 host that assigns a port dynamically.
 
-## Deploying to Render for free
+## Deploying for free
 
 See the top-level `README.md` (`Deploying for free` section) for the full
-walkthrough. Short version: **New → Blueprint** on Render, pointed at this
-repo — it picks up `../render.yaml` and deploys this folder as a free
-Docker web service.
+walkthrough. Short version: [Koyeb](https://www.koyeb.com) is the most
+reliably card-free host for this Dockerfile — **Create Web Service →
+GitHub → Dockerfile builder**, pointed at this folder. Render works too
+via **New → Web Service** (not Blueprint), though some accounts get asked
+for card verification there.

@@ -10,8 +10,22 @@ Communications Engineering background.
 
 - Angular 17 (standalone components, no NgModules)
 - SCSS with a small design-token system (see `src/styles.scss`)
-- `HttpClient` + RxJS to talk to the companion `Portfolio.Api` .NET backend
+- `HttpClient` + RxJS, with an `environment.apiEnabled` toggle to talk to the companion `Portfolio.Api` .NET backend — or not
 - Reactive Forms for the contact form
+
+## The `apiEnabled` toggle
+
+`src/environments/environment.ts` (dev) has `apiEnabled: true` and points
+at `http://localhost:5080/api`. `environment.prod.ts` (production) has
+`apiEnabled: false` by default — the deployed site runs entirely on the
+bundled fallback data with zero backend, so it works 24/7 without any
+server to maintain.
+
+- `apiEnabled: false` → `PortfolioService` returns fallback data instantly, no network call. The contact form opens the visitor's email client instead of POSTing.
+- `apiEnabled: true` → fetches live data from `apiUrl`, falls back to seed data if that request fails. The contact form POSTs to the API.
+
+Flip this once you have a live `Portfolio.Api` deployed somewhere (see the
+top-level README's "Optional: adding a live .NET API later").
 
 ## Getting started
 
@@ -20,11 +34,10 @@ npm install
 npm start        # ng serve, http://localhost:4200
 ```
 
-The app expects the .NET API at `http://localhost:5080/api` (see
+In dev, the app expects the .NET API at `http://localhost:5080/api` (see
 `src/environments/environment.ts`). **If the API isn't running, the page
 still works** — it falls back to local seed data in
-`src/app/core/services/portfolio.fallback-data.ts`, and the contact form
-will show a friendly error instead of crashing.
+`src/app/core/services/portfolio.fallback-data.ts`.
 
 To run frontend + backend together:
 
@@ -33,12 +46,13 @@ To run frontend + backend together:
 
 ## Editing your content
 
-All resume content lives in one place on the backend:
-`Portfolio.Api/Data/PortfolioData.cs`. Edit that file (name, experience,
-skills, projects, education) and it flows straight into the site — no
-Angular changes needed. The matching `portfolio.fallback-data.ts` file in
-the Angular project is a mirror for offline/frontend-only development; keep
-the two in sync if you edit both.
+If you're running with `apiEnabled: false` (the production default), edit
+`src/app/core/services/portfolio.fallback-data.ts` directly — that's the
+single source of truth for the deployed site.
+
+If you're running the full stack (`apiEnabled: true`), the backend's
+`Portfolio.Api/Data/PortfolioData.cs` is the source of truth instead; keep
+`portfolio.fallback-data.ts` in sync as a mirror for offline frontend work.
 
 ## Project structure
 
